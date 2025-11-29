@@ -89,7 +89,14 @@ func main() {
 			)
 		}
 
-		if err := sseServer.Start(host + ":" + port); err != nil {
+		listenAddr := host + ":" + port
+		logger.Info("Starting SSE server",
+			zap.String("context", "console"),
+			zap.String("listen_address", listenAddr),
+			zap.String("endpoint", fmt.Sprintf("http://%s/sse", listenAddr)),
+		)
+
+		if err := sseServer.Start(listenAddr); err != nil {
 			logger.Fatal("Server error",
 				zap.String("context", "console"),
 				zap.Error(err),

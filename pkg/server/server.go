@@ -214,6 +214,12 @@ func (s *MCPServer) ServeSSE(addr string) *server.SSEServer {
 	return server.NewSSEServer(s.server,
 		server.WithBaseURL(fmt.Sprintf("http://%s", addr)),
 		server.WithSSEContextFunc(func(ctx context.Context, r *http.Request) context.Context {
+			s.logger.Info("Incoming SSE request",
+				zap.String("method", r.Method),
+				zap.String("path", r.URL.Path),
+				zap.String("remote_addr", r.RemoteAddr),
+				zap.String("user_agent", r.UserAgent()),
+			)
 			ctx = auth.AuthFromRequest(s.logger)(ctx, r)
 
 			return ctx
