@@ -64,6 +64,9 @@ func main() {
 		}
 		port := os.Getenv("SLACK_MCP_PORT")
 		if port == "" {
+			port = os.Getenv("PORT") // Railway uses PORT
+		}
+		if port == "" {
 			port = strconv.Itoa(defaultSsePort)
 		}
 
@@ -93,6 +96,9 @@ func main() {
 			host = defaultSseHost
 		}
 		port := os.Getenv("SLACK_MCP_PORT")
+		if port == "" {
+			port = os.Getenv("PORT") // Railway uses PORT
+		}
 		if port == "" {
 			port = strconv.Itoa(defaultSsePort)
 		}
