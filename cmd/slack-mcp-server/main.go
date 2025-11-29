@@ -60,7 +60,12 @@ func main() {
 	case "sse":
 		host := os.Getenv("SLACK_MCP_HOST")
 		if host == "" {
-			host = defaultSseHost
+			// Default to 0.0.0.0 if PORT env var is set (cloud platforms like Railway)
+			if os.Getenv("PORT") != "" {
+				host = "0.0.0.0"
+			} else {
+				host = defaultSseHost
+			}
 		}
 		port := os.Getenv("SLACK_MCP_PORT")
 		if port == "" {
@@ -93,7 +98,12 @@ func main() {
 	case "http":
 		host := os.Getenv("SLACK_MCP_HOST")
 		if host == "" {
-			host = defaultSseHost
+			// Default to 0.0.0.0 if PORT env var is set (cloud platforms like Railway)
+			if os.Getenv("PORT") != "" {
+				host = "0.0.0.0"
+			} else {
+				host = defaultSseHost
+			}
 		}
 		port := os.Getenv("SLACK_MCP_PORT")
 		if port == "" {
